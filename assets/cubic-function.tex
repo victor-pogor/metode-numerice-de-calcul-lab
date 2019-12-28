@@ -1,0 +1,50 @@
+\documentclass{standalone}
+\begin{document}
+
+% Funcția propriu-zisă.
+\pgfmathdeclarefunction{function}{1}{
+	\pgfmathparse{#1^3 + 10*#1 - 9}
+}
+
+% Alte variabile.
+\pgfmathsetmacro{\a}{0.3}
+\pgfmathsetmacro{\b}{1.1}
+\pgfmathsetmacro{\cone}{0.7}
+\pgfmathsetmacro{\ctwo}{0.9}
+\pgfmathsetmacro{\cthree}{0.8}
+
+\begin{tikzpicture}[
+		hplot/.style={ycomb,mark=*,dashed,thick,mark options={solid}}
+	]
+	\begin{axis}[
+			axis lines=middle,
+			grid=major,
+			xmin=0.2,
+			xmax=1.2,
+			ymin=-10,
+			ymax=10,
+			domain=0.2:1.2,
+			samples=100,
+			xlabel=$x$,
+			ylabel=$y$,
+			tick style={very thick}
+		]
+
+		% Graficul funcției.
+		\addplot[blue,very thick] {function(x)};
+
+		% Linii verticale către axa x.
+        \addplot[hplot,samples at={\a}] {function(x)} node[pos=1,below,yshift=-0.2cm] {$a$};
+		\addplot[hplot,samples at={\b}] {function(x)} node[pos=1,above,yshift=0.2cm] {$b$};
+		\addplot[hplot,samples at={\cone}] {function(x)} node[pos=1,below,yshift=-0.2cm] {$c_1$};
+		\addplot[hplot,samples at={\ctwo}] {function(x)} node[pos=1,above,yshift=0.2cm] {$c_2$};
+		\addplot[hplot,samples at={\cthree}] {function(x)} node[pos=1,above,yshift=0.2cm] {$c_3$};
+
+		% Acolade care arată pașii de înjumătățire a intervalului.
+		\draw [decorate, decoration={brace,amplitude=10pt,raise=2pt,mirror}] (\a,-8) -- (\b,-8);
+		\draw [decorate, decoration={brace,amplitude=10pt,raise=2pt,mirror}] (\cone,-6) -- (\b,-6);
+		\draw [decorate, decoration={brace,amplitude=5pt,raise=2pt,mirror}] (\cone,-4.5) -- (\ctwo,-4.5);
+		\draw [decorate, decoration={brace,amplitude=3pt,raise=2pt,mirror}] (\cthree,-3) -- (\ctwo,-3);
+	\end{axis}
+\end{tikzpicture}
+\end{document}
