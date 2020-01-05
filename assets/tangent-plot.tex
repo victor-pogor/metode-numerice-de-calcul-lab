@@ -1,0 +1,56 @@
+\documentclass{standalone}
+\begin{document}
+
+% Funcția propriu-zisă.
+\pgfmathdeclarefunction{function}{1}{
+	\pgfmathparse{#1^3 + 10*#1 - 9}
+}
+
+% Functia tangentei în punctul $x_0$.
+\pgfmathdeclarefunction{tangent}{2}{
+	\pgfmathparse{(3 * #2^2 + 10) * (#1 - #2) + #2^3 + 10*#2 - 9}
+}
+
+% Zeroul funcției tangentei în punctul $x_0$.
+\pgfmathdeclarefunction{tangent_zero}{1}{
+	\pgfmathparse{(2 * #1^3 + 9) / (3 * #1^2 + 10)}
+}
+
+% Alte variabile.
+\pgfmathsetmacro{\tone}{3.4}
+\pgfmathsetmacro{\tonezero}{tangent_zero(\tone)}
+\pgfmathsetmacro{\ttwo}{\tonezero}
+\pgfmathsetmacro{\ttwozero}{tangent_zero(\ttwo)}
+
+\begin{tikzpicture}[
+		hplot/.style={ycomb,mark=*,dashed,thick,mark options={solid}}
+	]
+	\begin{axis}[
+			axis lines=middle,
+			grid=major,
+			xmin=0,
+			xmax=3.5,
+			ymin=-10,
+			ymax=80,
+			domain=0:3.5,
+			samples=100,
+			xlabel=$x$,
+			ylabel=$y$,
+			tick style={very thick}
+		]
+
+		% Graficul funcției.
+		\addplot[blue,very thick] {function(x)};
+		
+		% Linii verticale și tangente către axa $x$.
+		\addplot[hplot,samples at={\tone}] {function(x)} node[pos=1,above,yshift=0.2cm] {$t_1$}; % Linie verticală
+		\addplot[red,very thick,domain=\tone:\tonezero] {tangent(x,\tone)}; % Graficul tangentei
+		\addplot[only marks,samples at={\tonezero}]{tangent(x,\tone)}; % Punctul intersecției tangentei cu axa $x$
+		
+		\addplot[hplot,samples at={\ttwo}] {function(x)} node[pos=1,above] {$t_2$}; % Linie verticală
+		\addplot[red,very thick,domain=\ttwo:\ttwozero] {tangent(x,\ttwo)}; % Graficul tangentei
+		\addplot[only marks,samples at={\ttwozero}]{tangent(x,\ttwo)}; % Punctul intersecției tangentei cu axa $x$
+		
+	\end{axis}
+\end{tikzpicture}
+\end{document}
