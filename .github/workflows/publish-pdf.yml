@@ -12,7 +12,7 @@ jobs:
       - name: Build the Docker image
         run: docker build -t docker-latex . --file Dockerfile --tag docker-latex:$(date +%s)
       - name: Compile LaTeX document
-        run: docker run --rm -ti -v ${PWD}:/lab-01:Z docker-latex bash -c "make build && make clean"
+        run: docker run --rm -v ${PWD}:/lab-01:Z docker-latex bash -c "make build && make clean"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
