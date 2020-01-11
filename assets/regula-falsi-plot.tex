@@ -1,0 +1,56 @@
+\documentclass{standalone}
+\begin{document}
+
+% Funcția propriu-zisă.
+\pgfmathdeclarefunction{function}{1}{
+	\pgfmathparse{#1^3 + 10*#1 - 9}
+}
+
+% Funcția ce calculează punctul c.
+\pgfmathdeclarefunction{point}{2}{
+	\pgfmathparse{(#1 * function(#2) - #2 * function(#1)) / (function(#2) - function(#1))}
+}
+
+% Alte variabile.
+\pgfmathsetmacro{\a}{-0.5}
+\pgfmathsetmacro{\b}{3.6}
+\pgfmathsetmacro{\cone}{point(\a,\b)}
+
+\begin{tikzpicture}[
+		hplot/.style={ycomb,mark=*,dashed,thick,mark options={solid}}
+	]
+	\begin{axis}[
+			axis lines=middle,
+			grid=major,
+			xmin=-2,
+			xmax=4,
+			ymin=-25,
+			ymax=80,
+			%domain=0:3.5,
+			samples=100,
+			xlabel=$x$,
+			ylabel=$y$,
+			tick style={very thick}
+		]
+
+		\coordinate (Fa) at ({\a},{function(\a)});
+		\coordinate (Fb) at ({\b},{function(\b)});
+		\coordinate (Fc1) at ({\cone},{function(\cone)});
+
+		% Graficul funcției.
+		\addplot[blue,very thick] {function(x)};
+		
+		% Linii verticale, coarde și puncte pe grafic.
+		\addplot[only marks] coordinates {({\a},0)} node[pos=1,above] {$a$}; % Punctul $a$ pe axa $x$.
+		\addplot[hplot,samples at={\a}] {function(x)} node[pos=1,left,xshift=-0.2cm] {$f(a)$}; % Linie verticală
+		
+		\addplot[only marks] coordinates {({\b},0)} node[pos=1,below] {$b$}; % Punctul $b$ pe axa $x$.
+		\addplot[hplot,samples at={\b}] {function(x)} node[pos=1,left] {$f(b)$}; % Linie verticală
+		\draw[red,very thick] (Fa) -- (Fb); % Linie continuă între $(a,f(a))$ și $(b,f(b))$
+		
+		\addplot[only marks] coordinates {({\cone},0)} node[pos=1,above] {$c_1$}; % Punctul $c_1$ pe axa $x$.
+		\addplot[hplot,samples at={\cone}] {function(x)} node[pos=1,below,xshift=0.4cm] {$f(c_1)$}; % Linie verticală
+		\draw[red,very thick] (Fc1) -- (Fb); % Linie continuă între $(c_1,f(c_1))$ și $(b,f(b))$
+	\end{axis}
+\end{tikzpicture}
+\end{document}
