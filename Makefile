@@ -17,6 +17,10 @@ clean:
 	*.synctex.gz \
 	*.toc
 
-docker:
-	docker build -t docker-latex .
-	docker run --rm -ti -v ${PWD}:/lab-01:Z docker-latex bash -c "make build && make clean"
+docker-image:
+	docker build -t docker-latex . --file Dockerfile
+
+compile:
+	docker run --rm -v ${PWD}:/lab-01:Z docker-latex bash -c "make build && make clean"
+
+publish: docker-image compile
