@@ -1,0 +1,33 @@
+\documentclass{standalone}
+\begin{document}
+    \begin{tikzpicture}[node distance=2.2cm, scale=0.5]
+        \node (start) [startstop] {Start};
+		\node (in1) [io, below of=start] {$a, b, n \in \mathbb{R}$};
+		\node (dec1) [decision, below of=in1, yshift=-1.2cm] {\shortstack{$a > b$ \\ $f(a) \cdot f(b) > 0$}};
+		\node (stop1) [startstop, right of=dec1, xshift=2.5cm]{End};
+		\node (pro1) [process, below of=dec1, yshift=-1.5cm] {\shortstack{$h = \dfrac{b - a}{n}$ \\ $y_1 = f(a)$ \\ $x = a + h$}};
+		\node (dec2) [decision, below of=pro1, yshift=-0.5cm] {$x \leqslant b$};
+		\node (out1) [io, right of=dec2, xshift=2.5cm] {$a, b$};
+		\node (stop2) [startstop, below of=out1, yshift=-0.5cm] {End};
+		\node (pro2) [process, below of=dec2, yshift=-0.6cm] {$y_2 = f(x)$};
+		\node (dec3) [decision, below of=pro2, yshift=-0.8cm] {$y_1 \cdot y_2 < 0$};
+		\node (pro3a) [process, right of=dec3, xshift=2.5cm] {\shortstack{$a = x - h$ \\ $b = x$}};
+		\node (pro3b) [process, below of=dec3, yshift=-0.6cm] {\shortstack{$y_1 = y_2$ \\ $x = x + h$}};
+		\node (point) [below of=pro3b, yshift=0.6cm]{};
+		            
+		\draw [arrow] (start) -- (in1);
+		\draw [arrow] (in1) -- (dec1);
+		\draw [arrow] (dec1) -- node[anchor=south] {Da} (stop1);
+		\draw [arrow] (dec1) -- node[anchor=east] {Nu} (pro1);
+		\draw [arrow] (pro1) -- (dec2);
+		\draw [arrow] (dec2) -- node[anchor=east] {Da} (pro2);
+		\draw [arrow] (dec2) -- node[anchor=south] {Nu} (out1);
+		\draw [arrow] (out1) -- (stop2);
+		\draw [arrow] (pro2) -- (dec3);
+		\draw [arrow] (dec3) -- node[anchor=south] {Da} (pro3a);
+		\draw [arrow] (dec3) -- node[anchor=east] {Nu} (pro3b);
+		\draw [arrow] (pro3b) -- (point);
+		\draw [arrow] (pro3a) |- (point);
+		\draw [arrow] (point) -- +(-5,0) |- (dec2);
+    \end{tikzpicture}
+\end{document}

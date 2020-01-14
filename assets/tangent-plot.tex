@@ -30,9 +30,8 @@
 			grid=major,
 			xmin=0,
 			xmax=3.5,
-			ymin=-10,
+			ymin=-20,
 			ymax=80,
-			domain=0:3.5,
 			samples=100,
 			xlabel=$x$,
 			ylabel=$y$,
@@ -45,11 +44,11 @@
 		% Linii verticale și tangente către axa $x$.
 		\addplot[hplot,samples at={\tone}] {function(x)} node[pos=1,above,yshift=0.2cm] {$t_1$}; % Linie verticală
 		\addplot[red,very thick,domain=\tone:\tonezero] {tangent(x,\tone)}; % Graficul tangentei
-		\addplot[only marks,samples at={\tonezero}]{tangent(x,\tone)}; % Punctul intersecției tangentei cu axa $x$
+		\addplot[only marks,samples at={\tonezero}]{tangent(x,\tone)} node[pos=1,above,xshift=-0.3cm] {$x_1$}; % Punctul intersecției tangentei cu axa $x$
 		
 		\addplot[hplot,samples at={\ttwo}] {function(x)} node[pos=1,above] {$t_2$}; % Linie verticală
 		\addplot[red,very thick,domain=\ttwo:\ttwozero] {tangent(x,\ttwo)}; % Graficul tangentei
-		\addplot[only marks,samples at={\ttwozero}]{tangent(x,\ttwo)}; % Punctul intersecției tangentei cu axa $x$
+		\addplot[only marks,samples at={\ttwozero}]{tangent(x,\ttwo)} node[pos=1,above,yshift=0.3cm] {$x_2$}; % Punctul intersecției tangentei cu axa $x$
 		
 	\end{axis}
 \end{tikzpicture}

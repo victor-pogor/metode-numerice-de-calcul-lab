@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\begin{document}
+    \begin{tikzpicture}[node distance=2.2cm, scale=0.5]
+        \node (start) [startstop] {Start};
+        \node (in1) [io, below of=start] {$x_0,\varepsilon \in \mathbb{R}$};
+        \node (pro1) [process, below of=in1] {$x_1 = x_0 - \dfrac{f(x_0)}{f'(x_0)}$};
+        \node (dec1) [decision, below of=pro1, yshift=-1.0cm] {$|x_1 - x_0| > \varepsilon$};
+        \node (pro2a) [process, below of=dec1, yshift=-1.0cm] {\shortstack{$x_0 = x_1$ \\ $x_1 = x_0 - \dfrac{f(x_0)}{f'(x_0)}$}};
+        \node (stop) [startstop, right of=dec1, xshift=1.8cm] {Stop};
+
+        \draw [arrow] (start) -- (in1);
+        \draw [arrow] (in1) -- (pro1);
+        \draw [arrow] (pro1) -- (dec1);
+        \draw [arrow] (dec1) -- node[anchor=east] {Da} (pro2a);
+        \draw [arrow] (dec1) -- node[anchor=south] {Nu} (stop);
+        \draw [arrow] (pro2a) -- +(-5,0) |- (dec1);
+    \end{tikzpicture}
+\end{document}

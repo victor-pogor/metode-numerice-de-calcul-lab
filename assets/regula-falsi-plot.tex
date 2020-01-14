@@ -6,7 +6,7 @@
 	\pgfmathparse{#1^3 + 10*#1 - 9}
 }
 
-% Funcția ce calculează punctul c.
+% Funcția ce calculează punctul $c$.
 \pgfmathdeclarefunction{point}{2}{
 	\pgfmathparse{(#1 * function(#2) - #2 * function(#1)) / (function(#2) - function(#1))}
 }
@@ -26,7 +26,6 @@
 			xmax=4,
 			ymin=-25,
 			ymax=80,
-			%domain=0:3.5,
 			samples=100,
 			xlabel=$x$,
 			ylabel=$y$,

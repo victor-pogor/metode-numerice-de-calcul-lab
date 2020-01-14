@@ -1,0 +1,19 @@
+\documentclass{standalone}
+\begin{document}
+	\begin{tikzpicture}
+		\begin{axis}[
+				axis lines=middle,
+				grid=major,
+				xmin=-20,
+				xmax=20,
+				ymin=-20,
+				ymax=20,
+				xlabel=$x$,
+				ylabel=$y$,
+				xtick={-15,-10,...,15},
+				ytick={-15,-10,...,15},
+				tick style={very thick}]
+			\addplot[blue,very thick,samples=100] {x^3+10*x-9};
+		\end{axis}
+	\end{tikzpicture}
+\end{document}
